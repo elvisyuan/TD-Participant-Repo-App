@@ -6,7 +6,7 @@ import tornadofx.hbox
 
 class ParticipantView : View("Participant Editor") {
     override val root = hbox {
-        this += ParticipantsList::class
+        //this += ParticipantsList::class
         this += ParticipantEditor::class
     }
 }

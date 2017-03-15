@@ -52,16 +52,11 @@ class Mainview : View() {
 				this@hbox += uploadView.root
 			}
 		}
-		tab("Filter Participant") {
+		tab("Filter & Edit Participant") {
 			hbox {
 				this@hbox += filterView.root
 			}
 		}
-        tab("Particiant Records") {
-            hbox {
-                this@hbox += withFxProperties.root
-            }
-        }
 		tab("Manage Account") {
 			hbox {
 				this@hbox += buttonLogout

@@ -84,6 +84,13 @@ TD2 Desktop Application</description>
   </build>
   
   <dependencies>
+  <!-- https://mvnrepository.com/artifact/net.sf.ucanaccess/ucanaccess -->
+	<dependency>
+    	<groupId>net.sf.ucanaccess</groupId>
+    	<artifactId>ucanaccess</artifactId>
+    	<version>4.0.1</version>
+	</dependency>
+  
  	<dependency>
     	<groupId>no.tornado</groupId>
     	<artifactId>tornadofx</artifactId>

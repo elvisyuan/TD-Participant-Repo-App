@@ -15,11 +15,11 @@ import tornadofx.textfield
 import tornadofx.*
 
 class ParticipantEditor : View() {
-    val controller: ParticipantController by inject()
+    //val controller: ParticipantController by inject()
 	val integerStringConverter: IntegerStringConverter = IntegerStringConverter()
 			
     override val root = form {
-		setPrefSize(400.0, 100.0)
+		/*setPrefSize(400.0, 100.0)
         fieldset("Edit Participant Information") {
 			field("Id") {
 				setDisable(true)
@@ -95,6 +95,6 @@ class ParticipantEditor : View() {
                     }
 				}
 			}
-        }
+        }*/
     }
 }

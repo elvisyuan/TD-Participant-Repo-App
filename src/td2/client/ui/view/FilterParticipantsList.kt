@@ -1,7 +1,12 @@
 package td2.client.ui.view
 
+import javafx.event.ActionEvent
+import javafx.event.EventHandler
+import javafx.scene.control.ContextMenu
+import javafx.scene.control.MenuItem
 import td2.client.ui.controller.ParticipantController
 import td2.client.ui.model.Participant
+import td2.client.ui.email.mailto
 import tornadofx.SmartResize
 import tornadofx.View
 import tornadofx.bindSelected
@@ -25,6 +30,26 @@ class FilterParticipantsList : View() {
 		column("Location", Participant::locationProperty)
 		column("Online Banking", Participant::onlineBankingProperty)
 		column("Online Investment", Participant::onlineInvestmentProperty)
+		
+		// Right click option on record: email
+		var emailItem = MenuItem("Email");
+		emailItem.setOnAction() {
+			var posList = getSelectionModel()
+			var selectedParticipant: Participant = posList.getSelectedItem()
+			print(selectedParticipant.email)
+			mailto(selectedParticipant.email, "", "")
+		}
+		
+		// Right click option on record: edit
+		var editItem = MenuItem("Edit")
+		editItem.setOnAction() {
+			
+		}
+		
+		val menu = ContextMenu();
+		menu.getItems().add(editItem)
+		menu.getItems().add(emailItem)
+		setContextMenu(menu);
 
         bindSelected(controller.selectedParticipant)
         columnResizePolicy = SmartResize.POLICY

@@ -9,10 +9,10 @@ import tornadofx.column
 import tornadofx.tableview
 
 
-class ParticipantsList : View() {
-	val controller: ParticipantController by inject()
+class ParticipantsList {//}: View() {
+	//val controller: ParticipantController by inject()
 
-    override val root = tableview(controller.participants) {
+   /* override val root = tableview(controller.participants) {
 		setPrefSize(1400.0, 1080.0)
         column("Id", Participant::idProperty)
 		column("Last Project", Participant::lastProjectProperty)
@@ -28,5 +28,5 @@ class ParticipantsList : View() {
 
         bindSelected(controller.selectedParticipant)
         columnResizePolicy = SmartResize.POLICY
-    }
+    }*/
 }
