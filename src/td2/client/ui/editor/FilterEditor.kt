@@ -1,14 +1,13 @@
 package td2.client.ui.editor
 
 import javafx.collections.FXCollections
-import javafx.collections.ObservableList
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.util.converter.IntegerStringConverter
+import td2.backend.db.Ucanaccess
 import td2.client.resources.ImageRepos
-import td2.client.ui.controller.ParticipantController
+import td2.client.resources.fileRepos
 import tornadofx.View
-import tornadofx.bind
 import tornadofx.button
 import tornadofx.choicebox
 import tornadofx.combobox
@@ -17,39 +16,39 @@ import tornadofx.fieldset
 import tornadofx.form
 import tornadofx.hbox
 import tornadofx.textfield
+import org.controlsfx.control.CheckComboBox
 
 class FilterEditor : View() {
 	val integerStringConverter: IntegerStringConverter = IntegerStringConverter()
+	val connection = Ucanaccess(fileRepos.DATA_PATH)
 			
     override val root = form {
 		setPrefSize(400.0, 100.0)
         fieldset("Filter Participant Record") {
-			field("Id") {
-				textfield()
+			field("Country") {
+				val countries = connection.getAllCountries()
+				CheckComboBox<String>(FXCollections.observableArrayList(countries))
 			}
 			field("Last Project") {
-				textfield()
+				val projects = connection.getAllProjects()
+				CheckComboBox<String>(FXCollections.observableArrayList(projects))
 			}
 			field("Email") {
-				textfield()
-			}	
-			field("Country") {
 				textfield()
 			}
 			field("Date") {
 				datepicker()
             }	
 			field("Gender") {
-				val genders = FXCollections.observableArrayList("Male", "Female")
-				val combobox = combobox(values = genders)
-				//combobox.bind(controller.selectedParticipant.gender)
+				val genders = FXCollections.observableArrayList("Male", "Female", "Other")
+				combobox(values = genders)
 			}
 			field("Age") {
 				textfield()
 			}
 			field("Schedule") {
 				val schedule = FXCollections.observableArrayList("Manager", "Self")
-				val combobox = combobox(values = schedule)
+				combobox(values = schedule)
 				//combobox.bind(controller.selectedParticipant.schedule)
 			}
 			field("Location") {

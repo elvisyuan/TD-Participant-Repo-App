@@ -16,11 +16,14 @@ You can contact Marco Amadei at amadei.mar@gmail.com.
 */
 package td2.backend.db
 
+import javafx.collections.FXCollections
+import javafx.collections.ObservableList
 import net.ucanaccess.jdbc.UcanaccessConnection
 import net.ucanaccess.jdbc.UcanaccessDriver
+import td2.client.security.toMD5Hash
 import td2.client.ui.model.Device
-import td2.client.ui.model.MobileInsuranceApp
 import td2.client.ui.model.MobileBankingApp
+import td2.client.ui.model.MobileInsuranceApp
 import td2.client.ui.model.OnlineBanking
 import td2.client.ui.model.OnlineInsurance
 import td2.client.ui.model.OnlineInvestment
@@ -337,6 +340,65 @@ class Ucanaccess(pathNewDB: String?) {
 		
 		return participantsArray
 	}
+	
+	@Throws(SQLException::class)
+	public fun isUserAuthorized(username: String, password: String): Boolean {
+		var st: Statement? = null
+		try {
+			this.ucaConn!!.setAutoCommit(false)
+			st = this.ucaConn!!.createStatement()
+			var rs = st!!.executeQuery("SELECT * FROM Authorization"
+									 + " WHERE username = '" + username + "'")
+			while (rs.next()) {
+				val pass = rs.getString("password")
+				return pass == toMD5Hash(password)
+			}
+        
+		} finally {
+			if (st != null)
+				st.close()
+		}
+		return false;
+	}
+	
+	@Throws(SQLException::class)
+	public fun getAllCountries(): ObservableList<String> {
+		var st: Statement? = null
+		var countries = FXCollections.observableArrayList<String>()
+		try {
+			this.ucaConn!!.setAutoCommit(false)
+			st = this.ucaConn!!.createStatement()
+			var rs = st!!.executeQuery("SELECT DISTINCT(Country) FROM ParticipantRecord")
+			while (rs.next()) {
+				countries.add(rs.getString("Country"))
+			}
+        
+		} finally {
+			if (st != null)
+				st.close()
+		}
+		return countries;
+	}
+	
+	@Throws(SQLException::class)
+	public fun getAllProjects(): ObservableList<String> {
+		var st: Statement? = null
+		var lastProjects = FXCollections.observableArrayList<String>()
+		try {
+			this.ucaConn!!.setAutoCommit(false)
+			st = this.ucaConn!!.createStatement()
+			var rs = st!!.executeQuery("SELECT DISTINCT(LastProject) FROM ParticipantRecord")
+			while (rs.next()) {
+				lastProjects.add(rs.getString("LastProject"))
+			}
+        
+		} finally {
+			if (st != null)
+				st.close()
+		}
+		return lastProjects;
+	}
+
 
 	@Throws(SQLException::class)
 	private fun showExtensions() {

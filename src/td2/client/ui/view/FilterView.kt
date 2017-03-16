@@ -1,71 +1,66 @@
 package td2.client.ui.view
 
-import td2.client.ui.editor.FilterEditor
-import td2.client.ui.editor.ParticipantEditor
-import tornadofx.borderpane
 import javafx.collections.FXCollections
-import javafx.collections.ObservableList
+import javafx.scene.control.ContextMenu
+import javafx.scene.control.MenuItem
+import javafx.scene.control.SelectionMode
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.util.converter.IntegerStringConverter
+import org.controlsfx.control.CheckComboBox
+import td2.backend.db.Ucanaccess
 import td2.client.resources.ImageRepos
+import td2.client.resources.fileRepos
+import td2.client.ui.controller.ParticipantController
+import td2.client.ui.email.mailto
+import td2.client.ui.model.Participant
+import tornadofx.SmartResize
+import tornadofx.View
 import tornadofx.bind
+import tornadofx.bindSelected
+import tornadofx.borderpane
 import tornadofx.button
 import tornadofx.choicebox
+import tornadofx.column
 import tornadofx.combobox
 import tornadofx.datepicker
 import tornadofx.fieldset
 import tornadofx.form
 import tornadofx.hbox
-import tornadofx.textfield
-import javafx.beans.property.SimpleStringProperty
-import tornadofx.bind
-import tornadofx.button
-import tornadofx.datepicker
-import tornadofx.fieldset
-import tornadofx.form
-import tornadofx.hbox
-import tornadofx.textfield
-import javafx.event.ActionEvent
-import javafx.event.EventHandler
-import javafx.scene.control.ContextMenu
-import javafx.scene.control.MenuItem
-import td2.client.ui.controller.ParticipantController
-import td2.client.ui.model.Participant
-import td2.client.ui.email.mailto
-import tornadofx.SmartResize
-import tornadofx.View
-import tornadofx.bindSelected
-import tornadofx.column
+import tornadofx.listview
 import tornadofx.tableview
-import javafx.util.converter.IntegerStringConverter
+import tornadofx.textfield
 
 class FilterView : View("Filter Editor") {
 	val controller: ParticipantController by inject()
 	val integerStringConverter: IntegerStringConverter = IntegerStringConverter()
+	val connection = Ucanaccess(fileRepos.DATA_PATH)
 
 	override val root = borderpane {
 		left = form {
 			setPrefSize(400.0, 100.0)
 			fieldset("Filter Participant Record") {
-				field("Id") {
-					textfield()
+				field("Country") {
+					val countries = connection.getAllCountries()
+					listview(countries) {
+						setPrefHeight(48.0)
+						selectionModel.selectionMode = SelectionMode.MULTIPLE
+					}
+					CheckComboBox<String>(FXCollections.observableArrayList(countries))
 				}
 				field("Last Project") {
-					textfield()
+					val projects = connection.getAllProjects()
+					CheckComboBox<String>(FXCollections.observableArrayList(projects))
 				}
 				field("Email") {
-					textfield()
-				}
-				field("Country") {
 					textfield()
 				}
 				field("Date") {
 					datepicker()
 				}
 				field("Gender") {
-					val genders = FXCollections.observableArrayList("Male", "Female")
-					val combobox = combobox(values = genders)
-					//combobox.bind(controller.selectedParticipant.gender)
+					val genders = FXCollections.observableArrayList("Male", "Female", "Other")
+					combobox(values = genders)
 				}
 				field("Age") {
 					textfield()
@@ -122,7 +117,15 @@ class FilterView : View("Filter Editor") {
 			column("Country", Participant::countryProperty)
 			column("Last Contacted Date", Participant::lastContactedDateProperty)
 			column("Gender", Participant::genderProperty)
-			column("Age", Participant::ageProperty)
+			column("Age", Participant::ageProperty)//.cellFormat{
+				/*text = it.toString()
+				style {
+					if (it < 18) {
+						backgroundColor += c("#8b0000")
+						textFill = Color.WHITE
+					}
+				}*/
+			//}
 			column("Schedule", Participant::scheduleProperty)
 			column("Location", Participant::locationProperty)
 			column("Online Banking", Participant::onlineBankingProperty)

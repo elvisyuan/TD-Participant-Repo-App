@@ -84,6 +84,11 @@ TD2 Desktop Application</description>
   </build>
   
   <dependencies>
+  <dependency>
+    <groupId>org.controlsfx</groupId>
+    	<artifactId>controlsfx</artifactId>
+    	<version>8.40.12</version>
+	</dependency>
   <!-- https://mvnrepository.com/artifact/net.sf.ucanaccess/ucanaccess -->
 	<dependency>
     	<groupId>net.sf.ucanaccess</groupId>

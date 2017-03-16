@@ -1,6 +1,8 @@
 package no.tornado.fxsample.login
 
 import javafx.application.Platform
+import td2.backend.db.Ucanaccess
+import td2.client.resources.fileRepos
 import td2.client.ui.view.Mainview
 import tornadofx.Controller
 import tornadofx.FX
@@ -8,6 +10,7 @@ import tornadofx.FX
 class LoginController : Controller() {
     val loginScreen: LoginScreen by inject()
     val workbench: Mainview by inject()
+	val dbconnection = Ucanaccess(fileRepos.DATA_PATH)
 
     fun init() {
         with (config) {
@@ -43,7 +46,7 @@ class LoginController : Controller() {
 	
     fun tryLogin(username: String, password: String, remember: Boolean) {
         runAsync {
-            username == "admin" && password == "secret"
+        	dbconnection.isUserAuthorized(username, password)
         } ui { successfulLogin ->
 
             if (successfulLogin) {
