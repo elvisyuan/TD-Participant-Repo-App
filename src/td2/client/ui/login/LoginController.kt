@@ -6,6 +6,7 @@ import td2.client.resources.fileRepos
 import td2.client.ui.view.Mainview
 import tornadofx.Controller
 import tornadofx.FX
+import kotlin.collections.Collection
 
 class LoginController : Controller() {
     val loginScreen: LoginScreen by inject()

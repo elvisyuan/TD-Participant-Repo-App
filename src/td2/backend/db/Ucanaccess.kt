@@ -28,6 +28,8 @@ import td2.client.ui.model.OnlineBanking
 import td2.client.ui.model.OnlineInsurance
 import td2.client.ui.model.OnlineInvestment
 import td2.client.ui.model.Participant
+import td2.client.ui.view.Filter
+import td2.client.ui.view.FilterOptions
 import td2.client.utils.toLocalDate
 import java.io.IOException
 import java.sql.Connection
@@ -397,6 +399,61 @@ class Ucanaccess(pathNewDB: String?) {
 				st.close()
 		}
 		return lastProjects;
+	}
+	
+	@Throws(SQLException::class)
+	public fun filterParticipants(filter: Filter): ObservableList<Participant> {
+		var st: Statement? = null
+		var participantList = FXCollections.observableArrayList<Participant>()
+		try {
+			this.ucaConn!!.setAutoCommit(false)
+			st = this.ucaConn!!.createStatement()
+			var andOr = "OR"
+			if (filter.filterOption == FilterOptions.EXACT_MATCH) {
+				andOr = "AND"
+			}
+			var query = StringBuilder()
+			query.append("SELECT * FROM ParticipantRecord WHERE ")
+			
+			if (!filter.countries.isEmpty()) {
+				for (country in filter.countries) {
+					query.append("Country = '" + country + "' " + andOr)
+				}
+			}
+			if (!filter.lastProjects.isEmpty()) {
+				for (lastProject in filter.lastProjects) {
+					query.append("LastProject = '" + lastProject + "' " + andOr)
+				}
+			}
+			if (filter.email != "") {
+				query.append("Email = '" + filter.email + "' " + andOr)
+			}
+			if (filter.lastContactedDate != null) {
+				query.append("Email = '" + filter.email + "' " + andOr)
+			}
+			
+			
+			
+			
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			var rs = st!!.executeQuery("SELECT DISTINCT(LastProject) FROM ParticipantRecord")
+			while (rs.next()) {
+				//lastProjects.add(rs.getString("LastProject"))
+			}
+        
+		} finally {
+			if (st != null)
+				st.close()
+		}
+		return participantList
 	}
 
 

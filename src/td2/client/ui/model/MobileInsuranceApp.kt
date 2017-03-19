@@ -1,9 +1,22 @@
 package td2.client.ui.model
 
+import javafx.collections.FXCollections
+import javafx.collections.ObservableList
 import tornadofx.ItemViewModel
 import tornadofx.getProperty
 import tornadofx.property
-import java.time.LocalDate
+
+object MobileInsuranceConstants {
+	const val NO_MOBILE_BANKING = "No"
+	const val TD = "TD"
+	const val RBC = "RBC"
+	const val OTHER = "Other"
+}
+
+fun getAllMobileInsurances(): ObservableList<String> {
+	return FXCollections.observableArrayList(MobileBankingConstants.NO_MOBILE_BANKING, MobileBankingConstants.TD,
+			MobileBankingConstants.RBC, MobileBankingConstants.OTHER)
+}
 
 class MobileInsuranceApp(isTD2: Boolean, isRBC2: Boolean, isOther2: Boolean, other2Name: String) {
     var isTD2 by property(isTD2)

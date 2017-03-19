@@ -7,13 +7,18 @@ import javafx.scene.control.MenuItem
 import javafx.scene.control.SelectionMode
 import javafx.scene.input.Clipboard
 import javafx.scene.input.ClipboardContent
+import javafx.scene.paint.Color
 import td2.client.ui.controller.UploadController
 import td2.client.ui.model.Participant
 import tornadofx.SmartResize
 import tornadofx.View
 import tornadofx.bindSelected
+import tornadofx.c
+import tornadofx.cellFormat
 import tornadofx.column
+import tornadofx.style
 import tornadofx.tableview
+import java.time.LocalDate
 
 class UploadParticipantsList : View() {
 	val controller: UploadController by inject()
@@ -25,15 +30,17 @@ class UploadParticipantsList : View() {
 		column("Last Project", Participant::lastProjectProperty)
 		column("Email", Participant::emailProperty)
 		column("Country", Participant::countryProperty)
-		column("Date", Participant::lastContactedDateProperty)/*.cellFormat {
-			text = it.toString()
+		column("Date", Participant::lastContactedDateProperty).cellFormat {
+			val today = LocalDate.now().minusMonths(3)
 			style {
-				if (it < 18) {
-					backgroundColor += c("#8b0000")
-							textFill = Color.WHITE
+				if (today.compareTo(it) <= 0) {
+					backgroundColor += c("#cd3232")
+				} else {
+					backgroundColor += c("#32cd32")
 				}
+				textFill = Color.WHITE
 			}
-		}*/
+		}
 		column("Gender", Participant::genderProperty)
 		column("Age", Participant::ageProperty)
 		column("Schedule", Participant::scheduleProperty)

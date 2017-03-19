@@ -1,9 +1,30 @@
 package td2.client.ui.model
 
+import javafx.collections.FXCollections
+import javafx.collections.ObservableList
 import tornadofx.ItemViewModel
 import tornadofx.getProperty
 import tornadofx.property
-import java.time.LocalDate
+
+object MobileBankingConstants {
+	const val NO_MOBILE_BANKING = "No"
+	const val TD = "TD"
+	const val BMO = "BMO"
+	const val CIBC = "CIBC"
+	const val RBC = "RBC"
+	const val SCOTIABANK = "Scotiabank"
+	const val TANGERINE = "Tangerine"
+	const val PC_FINANCIAL = "PC Financial"
+	const val HSBC = "HSBC"
+	const val NATIONAL_BANK = "National Bank"
+	const val OTHER = "Other"
+}
+
+fun getAllMobileBankings(): ObservableList<String> {
+	return FXCollections.observableArrayList(MobileBankingConstants.NO_MOBILE_BANKING, MobileBankingConstants.TD, MobileBankingConstants.BMO,
+			MobileBankingConstants.CIBC, MobileBankingConstants.RBC, MobileBankingConstants.SCOTIABANK, MobileBankingConstants.TANGERINE,
+			MobileBankingConstants.PC_FINANCIAL, MobileBankingConstants.HSBC, MobileBankingConstants.NATIONAL_BANK, MobileBankingConstants.OTHER)
+}
 
 class MobileBankingApp(isApp: Boolean, isTD: Boolean, isBMO: Boolean,
 				  isCIBC: Boolean, isRBC: Boolean, isScotiabank: Boolean, isTangerine: Boolean, 
@@ -44,6 +65,46 @@ class MobileBankingApp(isApp: Boolean, isTD: Boolean, isBMO: Boolean,
 	
 	var otherAppName by property(otherAppName)
     fun otherAppNameProperty() = getProperty(MobileBankingApp::otherAppName)
+	
+	fun getMobileBankings(): ObservableList<String> {
+		var mobileBankings = FXCollections.observableArrayList<String>()
+		if (isTD) {
+			mobileBankings.add(MobileBankingConstants.TD)
+		}
+		if (isCIBC) {
+			mobileBankings.add(MobileBankingConstants.CIBC)
+		}
+		if (isBMO) {
+			mobileBankings.add(MobileBankingConstants.BMO)
+		}
+		if (isBMO) {
+			mobileBankings.add(MobileBankingConstants.BMO)
+		}
+		if (isRBC) {
+			mobileBankings.add(MobileBankingConstants.RBC)
+		}
+		if (isScotiabank) {
+			mobileBankings.add(MobileBankingConstants.SCOTIABANK)
+		}
+		if (isTangerine) {
+			mobileBankings.add(MobileBankingConstants.TANGERINE)
+		}
+		if (isPCFinancial) {
+			mobileBankings.add(MobileBankingConstants.PC_FINANCIAL)
+		}
+		if (isHSBC) {
+			mobileBankings.add(MobileBankingConstants.HSBC)
+		}
+		if (isNationalBank) {
+			mobileBankings.add(MobileBankingConstants.NATIONAL_BANK)
+		}
+		if (isOtherApp) {
+			mobileBankings.add(otherAppName)
+		}
+		return mobileBankings
+	}
+	var participantMobileBankings by property(getMobileBankings())
+    fun participantMobileBankingsProperty() = getProperty(MobileBankingApp::participantMobileBankings)
 }
 
 class MobileBankingAppModel : ItemViewModel<MobileBankingApp>() {
@@ -59,4 +120,5 @@ class MobileBankingAppModel : ItemViewModel<MobileBankingApp>() {
 	val isNationalBank = bind { item?.isNationalBankProperty() }
 	val isOtherApp = bind { item?.isOtherAppProperty() }
 	val otherAppName = bind { item?.otherAppNameProperty() }
+	val participantMobileBankings = bind{ item?.participantMobileBankingsProperty()}
 }

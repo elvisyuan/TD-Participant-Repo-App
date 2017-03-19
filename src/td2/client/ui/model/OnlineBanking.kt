@@ -1,9 +1,31 @@
 package td2.client.ui.model
 
+import javafx.collections.FXCollections
+import javafx.collections.ObservableList
 import tornadofx.ItemViewModel
 import tornadofx.getProperty
 import tornadofx.property
-import java.time.LocalDate
+
+object OnlineBankingConstants {
+	const val NO_ONLINE_BANKING = "No"
+	const val TD_EASYWEBR = "TD EasyWebr"
+	const val BMO_ONLINE_BANKING = "BMO Online Banking"
+	const val CIBC_ONLONE_BANKING = "CIBC Online Banking"
+	const val RBC_ONLINE_BANKING = "RBC Online Banking"
+	const val SCOTIA_ONLINE = "Scotia OnLine"
+	const val TANGERINE_ONLINE_BANKING = "Tangerine Online Banking"
+	const val PC_FINANCIAL_ONLINE_BANKING= "PC Financial Online Banking"
+	const val HSBC_INTERNET_BANKING= "HSBC Internet Banking"
+	const val NATIONAL_BANK_INTERNET_BANKING= "National Bank Internet Banking"
+	const val OTHER = "Other"
+}
+
+fun getAllOnlineBankings(): ObservableList<String> {
+	return FXCollections.observableArrayList(OnlineBankingConstants.NO_ONLINE_BANKING, OnlineBankingConstants.TD_EASYWEBR,
+			OnlineBankingConstants.BMO_ONLINE_BANKING, OnlineBankingConstants.CIBC_ONLONE_BANKING, OnlineBankingConstants.RBC_ONLINE_BANKING,
+			OnlineBankingConstants.SCOTIA_ONLINE, OnlineBankingConstants.TANGERINE_ONLINE_BANKING, OnlineBankingConstants.PC_FINANCIAL_ONLINE_BANKING,
+			OnlineBankingConstants.HSBC_INTERNET_BANKING, OnlineBankingConstants.NATIONAL_BANK_INTERNET_BANKING, OnlineBankingConstants.OTHER)
+}
 
 class OnlineBanking(isOnlineBanking: Boolean, isTDEasyWeb: Boolean, isBMOOnlineBanking:Boolean,
 					isCIBCOnlineBanking: Boolean, isRBCOnlineBanking: Boolean, isScotiaOnlineBanking: Boolean,

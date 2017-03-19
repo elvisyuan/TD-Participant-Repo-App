@@ -1,9 +1,29 @@
 package td2.client.ui.model
 
+import javafx.collections.FXCollections
+import javafx.collections.ObservableList
 import tornadofx.ItemViewModel
 import tornadofx.getProperty
 import tornadofx.property
-import java.time.LocalDate
+
+object OnlineInvestmentConstants {
+	const val NO_ONLINE_INVESTMENT = "No"
+	const val TD_WEB_BROKER = "TD WebBroker"
+	const val BMO_INVESTOR_LINE = "BMO InvestorLine"
+	const val CIBC_INVESTOR_EDGE = "CIBC Investor's Edge"
+	const val RBC_DIRECT_INVESTING = "RBC Direct Investing"
+	const val SCOTIA_ITRADE = "Scotia iTrade"
+	const val HSBC_INVESTDIRECT = "HSBC InvestDirect"
+	const val NATIONALBANK_DIRECT_BROKERAGE= "National Bank Direct Brokerage"
+	const val OTHER = "Other"
+}
+
+fun getAllOnlineInvestments(): ObservableList<String> {
+	return FXCollections.observableArrayList(OnlineInvestmentConstants.NO_ONLINE_INVESTMENT, OnlineInvestmentConstants.TD_WEB_BROKER, OnlineInvestmentConstants.BMO_INVESTOR_LINE,
+			OnlineInvestmentConstants.CIBC_INVESTOR_EDGE, OnlineInvestmentConstants.RBC_DIRECT_INVESTING, OnlineInvestmentConstants.HSBC_INVESTDIRECT,
+			OnlineInvestmentConstants.SCOTIA_ITRADE, OnlineInvestmentConstants.NATIONALBANK_DIRECT_BROKERAGE, OnlineInvestmentConstants.OTHER) 
+}
+
 
 class OnlineInvestment(isOnlineInvesting: Boolean, isTDWebBroker: Boolean, isBMOInvestorLine:Boolean,
 					isCIBCInvestorEdge: Boolean, isRBCDirectInvesting: Boolean, isScotiaiTrade: Boolean,

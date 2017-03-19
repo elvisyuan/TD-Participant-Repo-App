@@ -1,9 +1,22 @@
 package td2.client.ui.model
 
+import javafx.collections.FXCollections
+import javafx.collections.ObservableList
 import tornadofx.ItemViewModel
 import tornadofx.getProperty
 import tornadofx.property
-import java.time.LocalDate
+
+object OnlineInsuranceConstants {
+	const val NO_ONLINE_INSURANCE = "No"
+	const val TD_MY_INSURANCE = "TD MyInsurance"
+	const val RBC_ONLINE_INSURANCE = "RBC Online Insurance"
+	const val OTHER = "Other"
+}
+
+fun getAllOnlineInsurances(): ObservableList<String> {
+	return FXCollections.observableArrayList(OnlineInsuranceConstants.NO_ONLINE_INSURANCE, OnlineInsuranceConstants.TD_MY_INSURANCE,
+			OnlineInsuranceConstants.RBC_ONLINE_INSURANCE, OnlineInsuranceConstants.OTHER)
+}
 
 class OnlineInsurance(isOnlineInsurance: Boolean, isTDMyInsurance: Boolean, isRBCOnlineInsurance:Boolean,
 					isOtherInsurance: Boolean, otherInsuranceProduct: String) {

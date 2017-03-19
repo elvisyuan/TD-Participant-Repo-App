@@ -45,7 +45,7 @@ class Participant(id: Int, country: String, lastProject:String, lastContactedDat
 	var onlineInsurance by property(onlineInsurance)
 	fun onlineInsuranceProperty() = getProperty(Participant::onlineInsurance)
 	
-	var mobileBankingApp by property(mobileBankingApp)
+	var mobileBankingApp by property(mobileBankingApp.participantMobileBankings)
 	fun mobileBankingApptProperty() = getProperty(Participant::mobileBankingApp)
 	
 	var mobileInsuranceApp by property(mobileInsuranceApp)

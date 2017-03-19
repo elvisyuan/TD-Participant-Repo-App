@@ -1,5 +1,6 @@
 package td2.client.ui.view
 
+import com.casebank.example.view.FilteredTable
 import javafx.application.Platform
 import javafx.scene.control.Button
 import javafx.scene.control.Label
@@ -25,6 +26,8 @@ class Mainview : View() {
 	
 	val uploadView: UploadView by inject()
 	
+	val filteredTable: FilteredTable by inject()
+	
 	val buttonLogout: Button =  button("Logout") {
     	setOnAction {
     		loginController.logout()
@@ -40,11 +43,11 @@ class Mainview : View() {
 		
 		//set Stage boundaries to visible bounds of the main screen
 		val stage = FX.primaryStage
-		val primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX(primaryScreenBounds.getMinX());
-        stage.setY(primaryScreenBounds.getMinY());
-        stage.setWidth(primaryScreenBounds.getWidth());
-        stage.setHeight(primaryScreenBounds.getHeight());
+//		val primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+//        stage.setX(primaryScreenBounds.getMinX());
+//        stage.setY(primaryScreenBounds.getMinY());
+//        stage.setWidth(primaryScreenBounds.getWidth());
+//        stage.setHeight(primaryScreenBounds.getHeight());
 
         tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
 		tab("Upload Data") {
@@ -60,6 +63,7 @@ class Mainview : View() {
 		tab("Manage Account") {
 			hbox {
 				this@hbox += buttonLogout
+				this@hbox += filteredTable.root
 				this@hbox += Label("Under Development")
 			}
 		}
