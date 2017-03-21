@@ -56,7 +56,38 @@ class OnlineInvestment(isOnlineInvesting: Boolean, isTDWebBroker: Boolean, isBMO
 	fun isOtherIBProperty() = getProperty(OnlineInvestment::isOtherIB)
 	
 	var otherInvestmentBanking by property(otherInvestmentBanking)
-	fun otherInvestmentBankingProperty() = getProperty(OnlineInvestment::otherInvestmentBanking)	
+	fun otherInvestmentBankingProperty() = getProperty(OnlineInvestment::otherInvestmentBanking)
+	
+	fun getOnlineInvestments(): ObservableList<String> {
+		var onlineInvestments = FXCollections.observableArrayList<String>()
+		if (isTDWebBroker) {
+			onlineInvestments.add(OnlineInvestmentConstants.TD_WEB_BROKER)
+		}
+		if (isBMOInvestorLine) {
+			onlineInvestments.add(OnlineInvestmentConstants.BMO_INVESTOR_LINE)
+		}
+		if (isCIBCInvestorEdge) {
+			onlineInvestments.add(OnlineInvestmentConstants.CIBC_INVESTOR_EDGE)
+		}
+		if (isRBCDirectInvesting) {
+			onlineInvestments.add(OnlineInvestmentConstants.RBC_DIRECT_INVESTING)
+		}
+		if (isScotiaiTrade) {
+			onlineInvestments.add(OnlineInvestmentConstants.SCOTIA_ITRADE)
+		}
+		if (isHSBCInvestDirect) {
+			onlineInvestments.add(OnlineInvestmentConstants.HSBC_INVESTDIRECT)
+		}
+		if (isNationalBankDirectBrokerage) {
+			onlineInvestments.add(OnlineInvestmentConstants.NATIONALBANK_DIRECT_BROKERAGE)
+		}
+		if (isOtherIB) {
+			onlineInvestments.add(OnlineInvestmentConstants.OTHER)
+		}
+		return onlineInvestments
+	}
+	var participantOnlineInvestments by property(getOnlineInvestments())
+    fun participantOnlineInvestmentsProperty() = getProperty(OnlineInvestment::participantOnlineInvestments)
 }
 
 class OnlineInvestmentModel : ItemViewModel<OnlineInvestment>() {
@@ -70,4 +101,5 @@ class OnlineInvestmentModel : ItemViewModel<OnlineInvestment>() {
 	val isNationalBankDirectBrokerage = bind { item?.isNationalBankDirectBrokerageProperty() }
 	val isOtherIB = bind { item?.isOtherIBProperty() }
 	val otherInvestmentBanking = bind { item?.otherInvestmentBankingProperty() }
+	val participantOnlineInvestments = bind { item?.participantOnlineInvestmentsProperty() }
 }

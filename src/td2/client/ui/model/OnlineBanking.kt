@@ -67,6 +67,43 @@ class OnlineBanking(isOnlineBanking: Boolean, isTDEasyWeb: Boolean, isBMOOnlineB
 	
 	var otherOnlineBanking by property(otherOnlineBanking)
 	fun otherOnlineBankingProperty() = getProperty(OnlineBanking::otherOnlineBanking)
+	
+	fun getOnlineBankings(): ObservableList<String> {
+		var onlineBankings = FXCollections.observableArrayList<String>()
+		if (isTDEasyWeb) {
+			onlineBankings.add(OnlineBankingConstants.TD_EASYWEBR)
+		}
+		if (isBMOOnlineBanking) {
+			onlineBankings.add(OnlineBankingConstants.BMO_ONLINE_BANKING)
+		}
+		if (isCIBCOnlineBanking) {
+			onlineBankings.add(OnlineBankingConstants.CIBC_ONLONE_BANKING)
+		}
+		if (isRBCOnlineBanking) {
+			onlineBankings.add(OnlineBankingConstants.RBC_ONLINE_BANKING)
+		}
+		if (isScotiaOnlineBanking) {
+			onlineBankings.add(OnlineBankingConstants.SCOTIA_ONLINE)
+		}
+		if (isTangerineOnlineBanking) {
+			onlineBankings.add(OnlineBankingConstants.TANGERINE_ONLINE_BANKING)
+		}
+		if (isPCFinancialOnlineBanking) {
+			onlineBankings.add(OnlineBankingConstants.PC_FINANCIAL_ONLINE_BANKING)
+		}
+		if (isHSBCOnlineBanking) {
+			onlineBankings.add(OnlineBankingConstants.HSBC_INTERNET_BANKING)
+		}
+		if (isNationalBankOnlineBanking) {
+			onlineBankings.add(OnlineBankingConstants.NATIONAL_BANK_INTERNET_BANKING)
+		}
+		if (isOtherOB) {
+			onlineBankings.add(OnlineBankingConstants.OTHER)
+		}
+		return onlineBankings
+	}
+	var participantOnlineBankings by property(getOnlineBankings())
+    fun participantOnlineBankingsProperty() = getProperty(OnlineBanking::participantOnlineBankings)
 }
 
 class OnlineBankingModel : ItemViewModel<OnlineBanking>() {
@@ -82,4 +119,5 @@ class OnlineBankingModel : ItemViewModel<OnlineBanking>() {
 	val isNationalBankOnlineBanking = bind { item?.isNationalBankOnlineBankingProperty() }
 	val isOtherOB = bind { item ?.isOtherOBProperty() }
 	val otherOnlineBanking = bind { item ?.otherOnlineBankingProperty() }
+	val participantOnlineBankings = bind { item ?.participantOnlineBankingsProperty() }
 }

@@ -34,6 +34,22 @@ class OnlineInsurance(isOnlineInsurance: Boolean, isTDMyInsurance: Boolean, isRB
 
     var otherInsuranceProduct by property(otherInsuranceProduct)
     fun otherInsuranceProductProperty() = getProperty(OnlineInsurance::otherInsuranceProduct)
+	
+	fun getOnlineInsurances(): ObservableList<String> {
+		var onlineInsurances = FXCollections.observableArrayList<String>()
+		if (isTDMyInsurance) {
+			onlineInsurances.add(OnlineInsuranceConstants.TD_MY_INSURANCE)
+		}
+		if (isRBCOnlineInsurance) {
+			onlineInsurances.add(OnlineInsuranceConstants.RBC_ONLINE_INSURANCE)
+		}
+		if (isOtherInsurance) {
+			onlineInsurances.add(OnlineInsuranceConstants.OTHER)
+		}
+		return onlineInsurances
+	}
+	var participantOnlineInsurances by property(getOnlineInsurances())
+    fun participantOnlineInsurancesProperty() = getProperty(OnlineInsurance::participantOnlineInsurances)
 }
 
 class OnlineInsuranceModel : ItemViewModel<OnlineInsurance>() {
@@ -42,4 +58,5 @@ class OnlineInsuranceModel : ItemViewModel<OnlineInsurance>() {
 	val isRBCOnlineInsurance = bind { item?.isRBCOnlineInsuranceProperty() }
     val isOtherInsurance = bind { item?.isOtherInsuranceProperty() }
     val otherInsuranceProduct = bind { item?.otherInsuranceProductProperty() }
+	val participantOnlineInsurances = bind { item?.participantOnlineInsurancesProperty() }
 }

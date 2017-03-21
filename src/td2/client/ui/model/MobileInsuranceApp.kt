@@ -30,6 +30,22 @@ class MobileInsuranceApp(isTD2: Boolean, isRBC2: Boolean, isOther2: Boolean, oth
 	
 	var other2Name by property(other2Name)
 	fun other2NameProperty() = getProperty(MobileInsuranceApp::other2Name)
+	
+	fun getMobileInsurance(): ObservableList<String> {
+		var mobileInsurance = FXCollections.observableArrayList<String>()
+		if (isTD2) {
+			mobileInsurance.add(MobileInsuranceConstants.TD)
+		}
+		if (isRBC2) {
+			mobileInsurance.add(MobileInsuranceConstants.RBC)
+		}
+		if (isOther2) {
+			mobileInsurance.add(other2Name)
+		}
+		return mobileInsurance
+	}
+	var participantMobileInsurance by property(getMobileInsurance())
+    fun participantMobileInsuranceProperty() = getProperty(MobileInsuranceApp::participantMobileInsurance)
 }
 
 class MobileInsuranceAppModel : ItemViewModel<MobileInsuranceApp>() {
@@ -37,4 +53,5 @@ class MobileInsuranceAppModel : ItemViewModel<MobileInsuranceApp>() {
 	val isRBC2 = bind { item?.isRBC2Property() }
 	val isOther2 = bind { item?.isOther2Property() }
     val other2Name = bind { item?.other2NameProperty() }
+	val participantMobileInsurance = bind { item?.participantMobileInsuranceProperty() }
 }

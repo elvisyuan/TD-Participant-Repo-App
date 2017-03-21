@@ -77,9 +77,6 @@ class MobileBankingApp(isApp: Boolean, isTD: Boolean, isBMO: Boolean,
 		if (isBMO) {
 			mobileBankings.add(MobileBankingConstants.BMO)
 		}
-		if (isBMO) {
-			mobileBankings.add(MobileBankingConstants.BMO)
-		}
 		if (isRBC) {
 			mobileBankings.add(MobileBankingConstants.RBC)
 		}

@@ -54,4 +54,8 @@ class FilterParticipantsList : View() {
         bindSelected(controller.selectedParticipant)
         columnResizePolicy = SmartResize.POLICY
     }
+	
+	fun refresh() {
+		root.items = controller.participants
+	}
 }

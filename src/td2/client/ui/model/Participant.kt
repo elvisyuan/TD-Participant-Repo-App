@@ -36,22 +36,22 @@ class Participant(id: Int, country: String, lastProject:String, lastContactedDat
 	var location by property(location)
 	fun locationProperty() = getProperty(Participant::location)
 	
-	var onlineBanking by property(onlineBanking)
+	var onlineBanking by property(onlineBanking.participantOnlineBankings)
 	fun onlineBankingProperty() = getProperty(Participant::onlineBanking)
 	
-	var onlineInvestment by property(onlineInvestment)
+	var onlineInvestment by property(onlineInvestment.participantOnlineInvestments)
 	fun onlineInvestmentProperty() = getProperty(Participant::onlineInvestment)
 	
-	var onlineInsurance by property(onlineInsurance)
+	var onlineInsurance by property(onlineInsurance.participantOnlineInsurances)
 	fun onlineInsuranceProperty() = getProperty(Participant::onlineInsurance)
 	
 	var mobileBankingApp by property(mobileBankingApp.participantMobileBankings)
 	fun mobileBankingApptProperty() = getProperty(Participant::mobileBankingApp)
 	
-	var mobileInsuranceApp by property(mobileInsuranceApp)
+	var mobileInsuranceApp by property(mobileInsuranceApp.participantMobileInsurance)
 	fun mobileInsuranceAppProperty() = getProperty(Participant::mobileInsuranceApp)
 	
-	var device by property(device)
+	var device by property(device.participantDevices)
 	fun deviceProperty() = getProperty(Participant::device)
 	
 	var isConsent by property(isConsent)
