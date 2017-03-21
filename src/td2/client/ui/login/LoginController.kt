@@ -12,6 +12,8 @@ class LoginController : Controller() {
     val loginScreen: LoginScreen by inject()
     val workbench: Mainview by inject()
 	val dbconnection = Ucanaccess(fileRepos.DATA_PATH)
+	var userName: String? = ""
+	var adminstration: String? = ""
 
     fun init() {
         with (config) {
@@ -52,6 +54,8 @@ class LoginController : Controller() {
 
             if (successfulLogin) {
                 loginScreen.clear()
+				userName = username
+				adminstration = dbconnection.getUserRole(username)
 
                 if (remember) {
                     with (config) {

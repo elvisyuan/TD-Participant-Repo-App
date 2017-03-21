@@ -37,6 +37,7 @@ import td2.client.ui.model.Participant
 import td2.client.ui.view.Filter
 import td2.client.ui.view.FilterOptions
 import td2.client.utils.toLocalDate
+import td2.client.ui.view.FilteredTable.Person
 import java.io.IOException
 import java.sql.Connection
 import java.sql.DriverManager
@@ -372,6 +373,58 @@ class Ucanaccess(pathNewDB: String?) {
 				st.close()
 		}
 		return false;
+	}
+	
+	@Throws(SQLException::class)
+	public fun changePassword(username: String, password: String){
+		var st: Statement? = null
+		try {
+			st = this.ucaConn!!.createStatement()
+			val newpassword = toMD5Hash(password)
+			var rs = st!!.execute("UPDATE Authorization SET password = '" + newpassword + "'"
+									 + " WHERE username = '" + username + "'")
+		} finally {
+			if (st != null)
+				st.close()
+		}
+	}
+	
+	@Throws(SQLException::class)
+	public fun getUserRole(username: String): String {
+		var st: Statement? = null
+		try {
+			st = this.ucaConn!!.createStatement()
+			var rs = st!!.executeQuery("SELECT * FROM Authorization"
+									 + " WHERE username = '" + username + "'")
+			while (rs.next()) {
+				val role = rs.getString("role")
+				return role
+			}
+        
+		} finally {
+			if (st != null)
+				st.close()
+		}
+		return ""
+	}
+	
+	@Throws(SQLException::class)
+	public fun getAllUsers(): ObservableList<Person> {
+		var st: Statement? = null
+		var persons = FXCollections.observableArrayList<Person>()
+		try {
+			st = this.ucaConn!!.createStatement()
+			var rs = st!!.executeQuery("SELECT * FROM Authorization")
+			while (rs.next()) {
+				val person = Person(rs.getString("username"), rs.getString("role"))
+				persons.add(person)
+			}
+        
+		} finally {
+			if (st != null)
+				st.close()
+		}
+		return persons
 	}
 	
 	@Throws(SQLException::class)

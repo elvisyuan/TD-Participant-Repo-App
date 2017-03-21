@@ -189,8 +189,8 @@ class FilterView : View("Filter Editor") {
 			}
 		}
 		val participantScrollPane = scrollpane {
-			setPrefSize(1400.0, 1080.0)
 			participantTable = tableview(controller.participants) {
+				setPrefSize(1400.0, 1080.0)
 				// COLUMN INITIALIZATION
 				val idcolumn = column("Id", Participant::idProperty)
 				val countrycolumn = column("Country", Participant::countryProperty)
