@@ -4,6 +4,8 @@ import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
 import javafx.stage.FileChooser
 import javafx.stage.FileChooser.ExtensionFilter
+import td2.backend.db.ExcelConnection
+import td2.client.resources.fileRepos
 import td2.client.ui.controller.UploadController
 import tornadofx.FX
 import tornadofx.View
@@ -18,6 +20,7 @@ class UploadEditor : View() {
 	var uploadBtn = button("")
 	var clearBtn = button("")
 	val uploadController: UploadController by inject()
+	var excelConnection: ExcelConnection? = null
 	
 	override val root = form {
 		setPrefSize(400.0, 200.0)
@@ -33,19 +36,16 @@ class UploadEditor : View() {
 				button("Select Upload File") {
 					setOnAction() {
 						val fileChooser = FileChooser();
-						fileChooser.setTitle("Open Resource File");
-						fileChooser.getExtensionFilters().addAll(
-							ExtensionFilter("Text Files (*.txt)", "*.txt"),
-							ExtensionFilter("Image Files (*.png", "*.jpg", "*.gif)", "*.png", "*.jpg", "*.gif"),
-							ExtensionFilter("Audio Files (*.wav", "*.mp3", "*.aac)", "*.wav", "*.mp3", "*.aac"),
-							ExtensionFilter("All Files (*.*)", "*.*"));
+						fileChooser.setTitle("Select Upload File");
+						fileChooser.getExtensionFilters().addAll(ExtensionFilter("Excel Files (*.xls, *.xlsx, *.xlsm, *.xlsb)",
+								"*.xls", "*.xlsx", "*.xlsm", "*.xlsb"))
 						val selectedFile = fileChooser.showOpenDialog(FX.primaryStage);
 						if (selectedFile != null) {
-							// TODO: needs to be removed
-							uploadController.addParticipants(uploadController.demoParticipants)
 							uploadBtn.isDisable = false
-							
 							filePath.setText(selectedFile.absolutePath)
+							println(fileRepos.DATA_PATH)
+							println(selectedFile.absolutePath)
+							excelConnection = ExcelConnection(selectedFile.absolutePath)
 							val fileUploadMsgDlg = Alert(AlertType.INFORMATION)
 							fileUploadMsgDlg.setTitle("Upload Successful");
 							fileUploadMsgDlg.setHeaderText(selectedFile.name);

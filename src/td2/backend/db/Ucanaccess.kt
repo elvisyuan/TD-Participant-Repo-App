@@ -376,13 +376,27 @@ class Ucanaccess(pathNewDB: String?) {
 	}
 	
 	@Throws(SQLException::class)
-	public fun changePassword(username: String, password: String){
+	public fun changePassword(username: String, password: String) {
 		var st: Statement? = null
 		try {
 			st = this.ucaConn!!.createStatement()
 			val newpassword = toMD5Hash(password)
 			var rs = st!!.execute("UPDATE Authorization SET password = '" + newpassword + "'"
 									 + " WHERE username = '" + username + "'")
+		} finally {
+			if (st != null)
+				st.close()
+		}
+	}
+	
+	@Throws(SQLException::class)
+	public fun addUser(username: String, password: String, role: String) {
+		var st: Statement? = null
+		try {
+			st = this.ucaConn!!.createStatement()
+			val newpassword = toMD5Hash(password)
+			st!!.execute("INSERT INTO Authorization (username, password, role) " +
+					"VALUES('" + username + "', '" + newpassword + "', '" + role + "');")
 		} finally {
 			if (st != null)
 				st.close()

@@ -2,15 +2,14 @@ package td2.client.ui.view
 
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
+import javafx.scene.control.Alert
+import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.ButtonType
 import javafx.scene.control.ContextMenu
 import javafx.scene.control.MenuItem
-import javafx.scene.control.TextField
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.util.converter.IntegerStringConverter
-import javafx.scene.control.Alert
-import javafx.scene.control.ButtonType
-import javafx.scene.control.Alert.AlertType
 import org.controlsfx.control.CheckComboBox
 import td2.backend.db.Ucanaccess
 import td2.client.resources.ImageRepos
@@ -23,7 +22,26 @@ import td2.client.ui.model.getAllMobileInsurances
 import td2.client.ui.model.getAllOnlineBankings
 import td2.client.ui.model.getAllOnlineInsurances
 import td2.client.ui.model.getAllOnlineInvestments
-import tornadofx.*
+import tornadofx.SmartResize
+import tornadofx.View
+import tornadofx.bind
+import tornadofx.bindSelected
+import tornadofx.borderpane
+import tornadofx.button
+import tornadofx.cellFormat
+import tornadofx.choicebox
+import tornadofx.column
+import tornadofx.combobox
+import tornadofx.contentWidth
+import tornadofx.datepicker
+import tornadofx.fieldset
+import tornadofx.form
+import tornadofx.hbox
+import tornadofx.onChange
+import tornadofx.plusAssign
+import tornadofx.scrollpane
+import tornadofx.tableview
+import tornadofx.textfield
 import java.time.LocalDate
 
 data class Filter(val countries: ObservableList<String>, val lastProjects: ObservableList<String>, val email: String, val lastContactedDate: LocalDate,
@@ -119,7 +137,7 @@ class FilterView : View("Filter Editor") {
 					}
 					field("Filter Option") {
 						this += filterOptionBox
-						filterOptionBox.selectionModel.select(FilterOptions.ANY_MATCH)
+						filterOptionBox.selectionModel.select(FilterOptions.EXACT_MATCH)
 					}
 					field() {
 						hbox(15.0) {
@@ -151,7 +169,7 @@ class FilterView : View("Filter Editor") {
 									}
 									var filterOption = filterOptionBox.value
 									if (filterOption == null) {
-										filterOption = FilterOptions.ANY_MATCH
+										filterOption = FilterOptions.EXACT_MATCH
 									}
 									val appliedFilter = Filter(countries, lastProjects, email, lastContactedDate, gender, age, schedule, location,
 											onlineBanking, onlineInvestment, onlineInsurance, mobileBanking, mobileInsurance, devices, consent, filterOption)
@@ -188,8 +206,7 @@ class FilterView : View("Filter Editor") {
 				}
 			}
 		}
-		val participantScrollPane = scrollpane {
-			participantTable = tableview(controller.participants) {
+		participantTable = tableview(controller.participants) {
 				setPrefSize(1400.0, 1080.0)
 				// COLUMN INITIALIZATION
 				val idcolumn = column("Id", Participant::idProperty)
@@ -301,10 +318,9 @@ class FilterView : View("Filter Editor") {
                     editPerson(it)
                 }
 				bindSelected(controller.selectedParticipant)
-				columnResizePolicy = SmartResize.POLICY
-			}
+				//columnResizePolicy = SmartResize.POLICY
 		}
-		center = participantScrollPane
+		center = participantTable
 
 		right = form {
 			setPrefSize(400.0, 100.0)

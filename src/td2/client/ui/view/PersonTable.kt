@@ -1,14 +1,26 @@
 package td2.client.ui.view
 
-import javafx.beans.property.ObjectProperty
-import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.value.ObservableValue
-import javafx.collections.FXCollections
-import javafx.scene.control.SelectionMode
-import tornadofx.*
-import java.util.function.Predicate
+import javafx.scene.control.TableView
 import td2.backend.db.Ucanaccess
 import td2.client.resources.fileRepos
+import tornadofx.SmartResize
+import tornadofx.SortedFilteredList
+import tornadofx.View
+import tornadofx.borderpane
+import tornadofx.center
+import tornadofx.column
+import tornadofx.fieldset
+import tornadofx.form
+import tornadofx.hbox
+import tornadofx.label
+import tornadofx.onChange
+import tornadofx.singleAssign
+import tornadofx.tableview
+import tornadofx.textfield
+import tornadofx.top
+import tornadofx.vbox
+import tornadofx.weigthedWidth
+import java.util.function.Predicate
 
 /**
  * Created by ggreaves on 3/17/2017.
@@ -17,6 +29,7 @@ class FilteredTable : View("My View") {
 	val dbconnection = Ucanaccess(fileRepos.DATA_PATH)
     var persons = dbconnection.getAllUsers()
     var data = SortedFilteredList( persons )
+	var personTable = TableView(data)
     lateinit var compositePredicate: Predicate<Person>
 
     override val root = borderpane {
@@ -54,8 +67,9 @@ class FilteredTable : View("My View") {
         center {
 
             tableview<Person>( data ){
-                column("username", Person::username)
-                column("role", Person::role)
+				personTable = this
+                column("username", Person::username).weigthedWidth(1.0)
+                column("role", Person::role).weigthedWidth(1.0)
                 columnResizePolicy = SmartResize.POLICY
                 data.bindTo(this)
             }

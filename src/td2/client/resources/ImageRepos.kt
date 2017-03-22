@@ -10,5 +10,5 @@ object ImageRepos {
 }
 
 object fileRepos {
-	const val DATA_PATH = "C:\\TDRepoRoot\\ParticipamtRecordRepo.accdb"
+	const val DATA_PATH = "C:\\TDRepoRoot\\ParticipantRecordRepo.accdb"
 }
